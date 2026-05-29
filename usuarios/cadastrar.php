@@ -10,13 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql="INSERT INTO usuarios (nome, email, senha, tipo)
         VALUES(:nome, :email, :senha, :tipo)";
         $smtp = $pdo->prepare($sql);
-        $smtp_>execute([
+        $smtp->execute([
             ':nome'=>$nome,
             ':email'=>$email,
             ':senha'=>$senha,
             ':tipo'=>$tipo,
         ]);
-        header("Locatino:../painel.php");
+        header("Location:../painel.php");
         exit;
     }
     catch(PDOException $e){
