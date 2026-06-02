@@ -9,36 +9,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!is_dir('../Imagens')) {
             mkdir('../Imagens', 0777, true);
         }
-        $extensão = pathinfo($_FILES['imagem']['name'],PATHINFO_EXTENSION);
-        $nomeArquivo = uniqid().".".$extesao;
-        $caminho = "../Imagens".$nomeArquivo;
-        if(move_uploaded_file($_FILES['imagem']['tmp_name'],$caminho)){
+        $extensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
+        $nomeArquivo = uniqid() . "." . $extensao;
+        $caminho = "../Imagens" . $nomeArquivo;
+        if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminho)) {
             $imagem = $nomeArquivo;
-        }else{
-            echo"<script>alert('Erro ao salvar a imagem!')</script>";
-        }
-        try{
-        $sql="INSERT INTO livros (titulo, autor, disponivel, imagem)
-        VALUES(:titulo, :autor, :disponivel, :imagem)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            ':titulo'=>$titulo,
-            ':autor'=>$autor,
-            ':disponivel'=>$disponivel,
-            ':imagem'=>$imagem,
-        ]);
-        echo"<script>alert('Livro cadastrado com sucesso!');
-        window.location.href = '../painel.php'</script>";
-        exit;
-    }
-    catch(PDOException $e){
-       echo"<script>alert('Erro: ".$e->getMessage()."')</script>";
-    }
-        
-    }
 
+        } else {
+            echo "<script>alert('Erro ao salvar a imagem!')<script>";
+        }
+        try {
+            $sql = "INSERT INTO livros (titulo, autor, disponivel, imagem)
+            VALUES (:titulo,:autor,:disponivel,:imagem)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                ':titulo' => $titulo,
+                ':autor' => $autor,
+                ':disponivel' => $disponivel,
+                ':imagem' => $imagem
+            ]);
+            echo "<script> alert('Livro cadastrado com sucesso!');
+            window.location.href = '../painel.php';</script>";
+            exit;
+        } catch (PDOException $e) {
+            echo "<script>alert('Erro: " . $e->getMessage() . "');</script>";
+        }
+
+    }
 }
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
