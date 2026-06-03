@@ -1,6 +1,6 @@
 <?php
 require'../conexao.php';
-$id=$GET['id'];
+$id= $_GET['id'];
 try{
    $sql="DELETE FROM usuarios WHERE id=:id";
    $smtp = $pdo->prepare($sql);
